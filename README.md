@@ -10,3 +10,5 @@ fi
 ```
 
 Source your ```.bashrc``` file to enable the scripts
+
+Copy ```.inputrc``` to your home folder to enable scrolling through history with arrows
