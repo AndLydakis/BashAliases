@@ -110,7 +110,13 @@ function up(){
     cd $d
 }
 
+function del_his(){
+    for i in {1..$2}; do history -d $1; done
+}
 
+function stealth(){
+    history -d $((HISTCMD-1)) && $*
+}
 # convert video to mp4 (no sanity checks)
 # Use to_mp4 <input> 
 function to_mp4(){
