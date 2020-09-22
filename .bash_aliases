@@ -240,3 +240,43 @@ function check_rostests(){
         echo "$res"
     fi
 }
+
+# combined find + grep
+function fgr() {
+    NAM=""
+    GREPTYPE="-i -H"
+    if  [ -n "$1" ]; then
+        test -n "$2" && NAM="-name \"$2\""
+        test -n "$3" && GREPTYPE=$3
+        CMMD="find . $NAM -not -path '*/\.*' -exec egrep --colour=auto $GREPTYPE \"$1\" {} + 2>/dev/null"
+        >$2 echo -e "Running: $CMMD\n"
+        sh -c "$CMMD"
+        echo ""
+    else
+        echo -e "Expected: fgr <search> [file filter] [grep opt]\n"
+    fi
+}
+
+# create a python file with shebang
+function crpy() {
+    if [ $# -eq 0 ]
+      then
+        echo "No arguments supplied"
+        exit
+    fi
+    touch $1
+    echo "#!/usr/bin/env python" >> $1
+    chmod +x $1
+}
+
+# make dir and cd to it
+mcd() { mkdir -p "$1"; cd "$1";}
+
+#sync time using ssh
+function sync_time_with_remote ()
+{
+        echo $1
+        CUR_DATE=$(ssh $1 date -u)
+        echo $CUR_DATE
+        sudo date -s "${CUR_DATE}"
+}
